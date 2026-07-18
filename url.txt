@@ -40,9 +40,6 @@ https://raw.githubusercontent.com/AdguardTeam/cname-trackers/master/data/combine
 # Blocklist Project Crypto
 https://blocklistproject.github.io/Lists/dnsmasq-version/crypto-dnsmasq.txt
 
-# Blocklist Project Facebook
-https://blocklistproject.github.io/Lists/dnsmasq-version/facebook-dnsmasq.txt
-
 # Blocklist Project Fraud
 https://blocklistproject.github.io/Lists/dnsmasq-version/fraud-dnsmasq.txt
 
