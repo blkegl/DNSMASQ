@@ -53,7 +53,7 @@ https://raw.githubusercontent.com/AdguardTeam/cname-trackers/master/data/combine
 https://raw.githubusercontent.com/AdguardTeam/cname-trackers/master/data/combined_disguised_mail_trackers_justdomains.txt
 
 # Combined Privacy Blocklist
-https://raw.githubusercontent.com/bongochong/CombinedPrivacyBlockLists/master/NoFormatting/cpbl-dnsmasq.txt
+# https://raw.githubusercontent.com/bongochong/CombinedPrivacyBlockLists/master/NoFormatting/cpbl-dnsmasq.txt
 
 # Bundy Meta Blocklist
 https://raw.githubusercontent.com/Bundy01/meta-blocklists/main/meta-dnsmasq.txt
@@ -62,7 +62,7 @@ https://raw.githubusercontent.com/Bundy01/meta-blocklists/main/meta-dnsmasq.txt
 https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews-social/hosts
 
 # 1Hosts
-https://badmojr.github.io/1Hosts/Lite/hosts.txt
+# https://badmojr.github.io/1Hosts/Lite/hosts.txt
 
 # Blocklist Project Abuse
 https://blocklistproject.github.io/Lists/dnsmasq-version/abuse-dnsmasq.txt
@@ -118,9 +118,6 @@ https://perflyst.github.io/PiHoleBlocklist/SmartTV.txt
 
 # Android Tracking
 https://perflyst.github.io/PiHoleBlocklist/android-tracking.txt
-
-# Blocklist
-https://raw.githubusercontent.com/ph00lt0/blocklist/master/domains.txt
 
 # Mix
 https://raw.github.com/notracking/hosts-blocklists/master/hostnames.txt
