@@ -1,6 +1,23 @@
+# Hagezi Ultimate
+https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/dnsmasq/ultimate.txt
+
+# Threat Intelligence
+https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/dnsmasq/tif.txt
+
+# Social Media
+https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/dnsmasq/social.txt
+
+# URL Shorteners
+https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/dnsmasq/urlshortener.txt
+
+# Dynamic DNS
+https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/dnsmasq/dyndns.txt
+
+# DoH / VPN / Proxy Bypass
+https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/dnsmasq/doh-vpn-proxy-bypass.txt
 
 # Phishing Army
-# https://phishing.army/download/phishing_army_blocklist_extended.txt
+https://phishing.army/download/phishing_army_blocklist_extended.txt
 
 # Android Security Hosts
 https://raw.githubusercontent.com/furkun/AndroidSecurityHosts/main/hosts
@@ -13,6 +30,9 @@ https://hostfiles.frogeye.fr/firstparty-trackers-hosts.txt
 
 # Google
 https://raw.githubusercontent.com/kowith337/PersonalFilterListCollection/master/hosts/hosts_google_adservice_id.txt
+
+# Badware Hoster
+https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/dnsmasq/hoster.txt
 
 # Dandelion Sprout's Anti-Malware List
 https://raw.githubusercontent.com/DandelionSprout/adfilt/master/Alternate%20versions%20Anti-Malware%20List/AntiMalwareHosts.txt
@@ -32,11 +52,54 @@ https://raw.githubusercontent.com/AdguardTeam/cname-trackers/master/data/combine
 # Adguard Mail Trackers
 https://raw.githubusercontent.com/AdguardTeam/cname-trackers/master/data/combined_disguised_mail_trackers_justdomains.txt
 
+# Combined Privacy Blocklist
+https://raw.githubusercontent.com/bongochong/CombinedPrivacyBlockLists/master/NoFormatting/cpbl-dnsmasq.txt
+
 # Bundy Meta Blocklist
-https://raw.githubusercontent.com/Bundy01/meta-blocklists/main/meta-domains.txt
+https://raw.githubusercontent.com/Bundy01/meta-blocklists/main/meta-dnsmasq.txt
 
 # StevenBlack Fakenews+Social
 https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews-social/hosts
 
 # 1Hosts
-# https://badmojr.github.io/1Hosts/Lite/hosts.txt
+https://badmojr.github.io/1Hosts/Lite/hosts.txt
+
+# Blocklist Project Abuse
+https://blocklistproject.github.io/Lists/dnsmasq-version/abuse-dnsmasq.txt
+
+# Blocklist Project Ads 
+https://blocklistproject.github.io/Lists/dnsmasq-version/ads-dnsmasq.txt
+
+# Blocklist Project Crypto
+https://blocklistproject.github.io/Lists/dnsmasq-version/crypto-dnsmasq.txt
+
+# Blocklist Project Facebook
+https://blocklistproject.github.io/Lists/dnsmasq-version/facebook-dnsmasq.txt
+
+# Blocklist Project Fraud
+https://blocklistproject.github.io/Lists/dnsmasq-version/fraud-dnsmasq.txt
+
+# Blocklist Project Malware (too big)
+https://blocklistproject.github.io/Lists/dnsmasq-version/malware-dnsmasq.txt
+
+# Blocklist Project Phishing
+https://blocklistproject.github.io/Lists/dnsmasq-version/phishing-dnsmasq.txt
+
+# Blocklist Project Ransomware
+https://blocklistproject.github.io/Lists/dnsmasq-version/ransomware-dnsmasq.txt
+
+# Blocklist Project Redirect
+https://blocklistproject.github.io/Lists/dnsmasq-version/redirect-dnsmasq.txt
+
+# Blocklist Project Scam
+https://blocklistproject.github.io/Lists/dnsmasq-version/scam-dnsmasq.txt
+
+# Blocklist Project Tracking
+https://blocklistproject.github.io/Lists/dnsmasq-version/tracking-dnsmasq.txt
+
+
+# Blocklist Project TikTok
+https://blocklistproject.github.io/Lists/dnsmasq-version/tiktok-dnsmasq.txt
+
+# Blocklist Project Smart TV
+https://blocklistproject.github.io/Lists/dnsmasq-version/smart-tv-dnsmasq.txt
