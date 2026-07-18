@@ -1,0 +1,39 @@
+name: Update DNSmasq List
+
+on:
+  schedule:
+    # Runs at 00:00 UTC every day
+    - cron: '0 0 * * *'
+  workflow_dispatch: # Allows manual triggering from the Actions tab
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # Needed to push changes back to the repo
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.x'
+
+    - name: Run Aggregation Script
+      run: python generate_dnsmasq.py
+
+    - name: Commit and Push Changes
+      run: |
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        
+        # Check if dnsmasq.txt has changed
+        if git status --porcelain | grep -q "dnsmasq.txt"; then
+          git add dnsmasq.txt
+          git commit -m "chore: auto-update dnsmasq.txt [skip ci]"
+          git push
+        else
+          echo "No changes detected in dnsmasq.txt"
+        fi
