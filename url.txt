@@ -2,7 +2,7 @@
 https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/dnsmasq/ultimate.txt
 
 # Threat Intelligence
-https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/dnsmasq/tif.txt
+# https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/dnsmasq/tif.txt
 
 # Social Media
 https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/dnsmasq/social.txt
@@ -80,7 +80,7 @@ https://blocklistproject.github.io/Lists/dnsmasq-version/facebook-dnsmasq.txt
 https://blocklistproject.github.io/Lists/dnsmasq-version/fraud-dnsmasq.txt
 
 # Blocklist Project Malware (too big)
-https://blocklistproject.github.io/Lists/dnsmasq-version/malware-dnsmasq.txt
+# https://blocklistproject.github.io/Lists/dnsmasq-version/malware-dnsmasq.txt
 
 # Blocklist Project Phishing
 https://blocklistproject.github.io/Lists/dnsmasq-version/phishing-dnsmasq.txt
