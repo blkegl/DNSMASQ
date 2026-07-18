@@ -1,7 +1,6 @@
 import os
 import re
-import urllib.request
-from urllib.error import HTTPError, URLError
+import requests
 
 # ------------------------------------------------------------
 # Configuration
@@ -13,6 +12,7 @@ TIMEOUT = 30
 
 USER_AGENT = "Mozilla/5.0"
 
+# Main domain validation regex (handles standard domains and punycode)
 DOMAIN_REGEX = re.compile(
     r"^(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z]{2,63}$",
     re.IGNORECASE,
@@ -34,11 +34,40 @@ SKIP_DOMAINS = {
 
 
 # ------------------------------------------------------------
+# Helpers
+# ------------------------------------------------------------
+
+def format_size(size_bytes):
+    """Formats bytes into human-readable B, KB, or MB."""
+    if size_bytes < 1024:
+        return f"{size_bytes} B"
+    elif size_bytes < 1024 * 1024:
+        return f"{size_bytes / 1024:.2f} KB"
+    else:
+        return f"{size_bytes / (1024 * 1024):.2f} MB"
+
+
+def is_valid_domain(domain):
+    """Validates domain structure and handles IDNA (Punycode) translation."""
+    if not domain or domain in SKIP_DOMAINS:
+        return None
+    try:
+        # Convert IDN (e.g., bücher.de) to punycode (xn--bcher-kva.de)
+        punycode = domain.encode("idna").decode("ascii")
+        # Validate syntax against the precompiled regex
+        if DOMAIN_REGEX.fullmatch(punycode):
+            return punycode
+    except Exception:
+        pass
+    return None
+
+
+# ------------------------------------------------------------
 # Parsing
 # ------------------------------------------------------------
 
 def extract_domain_from_line(line):
-    line = line.rstrip("\r")
+    line = line.rstrip("\r\n")
     line = line.split("#", 1)[0].strip().lower()
 
     if not line:
@@ -53,22 +82,15 @@ def extract_domain_from_line(line):
     # --------------------------------------------------------
     m = DNSMASQ_REGEX.match(line)
     if m:
-        domain = m.group(1).strip(".")
-
-        if domain in SKIP_DOMAINS:
-            return None
-
-        if DOMAIN_REGEX.fullmatch(domain):
-            return domain
-
-        return None
+        return m.group(1).strip(".")
 
     # --------------------------------------------------------
-    # Adblock Plus / AdGuard
+    # Adblock Plus / AdGuard (handles ||example.com^, example.com^, example.com$)
     # --------------------------------------------------------
     if line.startswith("||"):
         line = line[2:]
-        line = ABP_SPLIT_REGEX.split(line, 1)[0]
+    
+    line = ABP_SPLIT_REGEX.split(line, 1)[0]
 
     # --------------------------------------------------------
     # Wildcards
@@ -79,7 +101,6 @@ def extract_domain_from_line(line):
             return None
 
     parts = line.split()
-
     if not parts:
         return None
 
@@ -87,28 +108,14 @@ def extract_domain_from_line(line):
     # Hosts files
     # --------------------------------------------------------
     if len(parts) >= 2:
-        if parts[0] in (
-            "0.0.0.0",
-            "127.0.0.1",
-            "::1",
-            "::",
-            "255.255.255.255",
-        ):
+        if parts[0] in ("0.0.0.0", "127.0.0.1", "::1", "::", "255.255.255.255"):
             domain = parts[1]
         else:
             domain = parts[-1]
     else:
         domain = parts[0]
 
-    domain = domain.strip(".")
-
-    if domain in SKIP_DOMAINS:
-        return None
-
-    if not DOMAIN_REGEX.fullmatch(domain):
-        return None
-
-    return domain
+    return domain.strip(".")
 
 
 # ------------------------------------------------------------
@@ -118,57 +125,83 @@ def extract_domain_from_line(line):
 def fetch_domains(url_file):
     if not os.path.exists(url_file):
         print(f"Missing: {url_file}")
-        return set()
+        return set(), [], 0, 0
 
     with open(url_file, encoding="utf-8") as f:
-        urls = [
+        # Deduplicate URLs while preserving declaration order
+        urls = list(dict.fromkeys(
             line.strip()
             for line in f
             if line.strip() and not line.lstrip().startswith("#")
-        ]
+        ))
 
-    domains = set()
+    global_domains = set()
+    source_metrics = []
+    global_raw_processed = 0
+    successful_downloads = 0
 
     total = len(urls)
 
-    for index, url in enumerate(urls, 1):
+    # Context-managed session for proper socket cleanup
+    with requests.Session() as session:
+        session.headers.update({"User-Agent": USER_AGENT})
 
-        print(f"[{index}/{total}] Fetching: {url}")
+        for index, url in enumerate(urls, 1):
+            print(f"[{index}/{total}] Fetching: {url}")
 
-        try:
-            request = urllib.request.Request(
-                url,
-                headers={
-                    "User-Agent": USER_AGENT,
-                },
-            )
+            try:
+                with session.get(url, timeout=TIMEOUT, stream=True) as response:
+                    response.raise_for_status()
+                    
+                    # Try getting content length from header
+                    content_length = response.headers.get("Content-Length")
+                    byte_size = int(content_length) if content_length and content_length.isdigit() else 0
+                    
+                    file_unique_domains = set()
+                    file_raw_count = 0
+                    fallback_byte_size = 0
 
-            with urllib.request.urlopen(request, timeout=TIMEOUT) as response:
+                    # Stream raw bytes to ensure total compatibility across requests versions
+                    for raw_line in response.iter_lines(decode_unicode=False):
+                        if raw_line is None:
+                            continue
+                        
+                        # Fallback parsing sizes manually if Content-Length header is omitted
+                        if not byte_size:
+                            fallback_byte_size += len(raw_line) + 1 
+                        
+                        line = raw_line.decode("utf-8", errors="ignore")
+                        extracted = extract_domain_from_line(line)
+                        
+                        if extracted:
+                            file_raw_count += 1
+                            
+                            validated = is_valid_domain(extracted)
+                            if validated:
+                                file_unique_domains.add(validated)
+                                global_domains.add(validated)
 
-                content = response.read().decode(
-                    "utf-8",
-                    errors="ignore",
-                )
+                global_raw_processed += file_raw_count
+                successful_downloads += 1
+                final_bytes = byte_size if byte_size else fallback_byte_size
 
-            added = 0
+                source_metrics.append({
+                    "url": url,
+                    "bytes": final_bytes,
+                    "unique_domains": len(file_unique_domains)
+                })
 
-            for line in content.splitlines():
+                print(f"    + {len(file_unique_domains):,} unique valid domains found")
 
-                domain = extract_domain_from_line(line)
+            except requests.exceptions.RequestException as e:
+                print(f"    ERROR: {e}")
+            except Exception as e:
+                print(f"    ERROR: {e}")
 
-                if domain and domain not in domains:
-                    domains.add(domain)
-                    added += 1
+    # Sort source metrics descending based on unique domain counts
+    source_metrics.sort(key=lambda x: x["unique_domains"], reverse=True)
 
-            print(f"    + {added:,} new domains")
-
-        except (HTTPError, URLError) as e:
-            print(f"    ERROR: {e}")
-
-        except Exception as e:
-            print(f"    ERROR: {e}")
-
-    return domains
+    return global_domains, source_metrics, global_raw_processed, successful_downloads
 
 
 # ------------------------------------------------------------
@@ -176,31 +209,14 @@ def fetch_domains(url_file):
 # ------------------------------------------------------------
 
 def filter_subdomains(domains):
-    """
-    Remove subdomains when parent domain exists.
-
-    Example:
-
-        ads.example.com
-        img.example.com
-        example.com
-
-    becomes
-
-        example.com
-    """
-
     domain_set = domains
     kept = []
 
     for domain in domain_set:
-
         labels = domain.split(".")
-
         keep = True
 
         for i in range(1, len(labels)):
-
             parent = ".".join(labels[i:])
 
             if "." not in parent:
@@ -214,7 +230,6 @@ def filter_subdomains(domains):
             kept.append(domain)
 
     kept.sort()
-
     return kept
 
 
@@ -223,9 +238,7 @@ def filter_subdomains(domains):
 # ------------------------------------------------------------
 
 def write_dnsmasq(domains, filename):
-
     with open(filename, "w", encoding="utf-8") as f:
-
         f.writelines(
             f"address=/{domain}/0.0.0.0\n"
             for domain in domains
@@ -237,25 +250,32 @@ def write_dnsmasq(domains, filename):
 # ------------------------------------------------------------
 
 def main():
-
-    print("=" * 60)
-    print("DNSMASQ Domain Aggregator")
-    print("=" * 60)
-
-    raw_domains = fetch_domains(INPUT_FILE)
-
-    print()
-    print(f"Downloaded unique domains : {len(raw_domains):,}")
-
+    raw_domains, source_metrics, global_raw_processed, total_sources = fetch_domains(INPUT_FILE)
+    
     cleaned_domains = filter_subdomains(raw_domains)
-
-    print(f"After subdomain removal   : {len(cleaned_domains):,}")
-    print(f"Removed                   : {len(raw_domains) - len(cleaned_domains):,}")
-
     write_dnsmasq(cleaned_domains, OUTPUT_FILE)
 
-    print()
-    print(f"Successfully generated '{OUTPUT_FILE}'")
+    print("\n" + "=" * 50)
+    print(" INDIVIDUAL SOURCE METRICS REPORT")
+    print("=" * 50)
+    for metric in source_metrics:
+        print(f"Source: {metric['url']}")
+        print(f"  └─ File Size: {format_size(metric['bytes'])}")
+        print(f"  └─ Unique Valid Domains: {metric['unique_domains']:,}\n")
+
+    global_unique = len(raw_domains)
+    global_removed = global_raw_processed - global_unique
+    after_subdomain_removal = len(cleaned_domains)
+    subdomains_removed = global_unique - after_subdomain_removal
+
+    print("=" * 50)
+    print(f"[INFO] Downloaded sources: {total_sources}")
+    print(f"[INFO] Raw domains processed: {global_raw_processed:,}")
+    print(f"[INFO] Global unique valid domains: {global_unique:,}")
+    print(f"[INFO] Global duplicates/invalid removed: {global_removed:,}")
+    print(f"[INFO] After subdomain removal: {after_subdomain_removal:,}")
+    print(f"[INFO] Subdomains removed: {subdomains_removed:,}")
+    print("=" * 50)
 
 
 if __name__ == "__main__":
