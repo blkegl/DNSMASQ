@@ -4,9 +4,6 @@ https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/dnsmasq/ultimate.txt
 # Threat Intelligence
 https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/dnsmasq/tif.medium.txt
 
-# Social Media
-https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/dnsmasq/social.txt
-
 # URL Shorteners
 https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/dnsmasq/urlshortener.txt
 
@@ -97,7 +94,6 @@ https://blocklistproject.github.io/Lists/dnsmasq-version/scam-dnsmasq.txt
 # Blocklist Project Tracking
 https://blocklistproject.github.io/Lists/dnsmasq-version/tracking-dnsmasq.txt
 
-
 # Blocklist Project TikTok
 https://blocklistproject.github.io/Lists/dnsmasq-version/tiktok-dnsmasq.txt
 
@@ -129,7 +125,5 @@ https://gitlab.com/quidsup/notrack-blocklists/raw/master/notrack-blocklist.txt
 https://raw.githubusercontent.com/RPiList/specials/master/Blocklisten/samsung
 https://raw.githubusercontent.com/jmdugan/blocklists/master/corporations/facebook/all
 https://raw.githubusercontent.com/nickspaargaren/no-amazon/master/amazon.txt
-https://raw.githubusercontent.com/jmdugan/blocklists/master/corporations/microsoft/all
-https://raw.githubusercontent.com/nickspaargaren/no-google/master/google-domains
 https://raw.githubusercontent.com/jmdugan/blocklists/master/corporations/microsoft/all
 https://raw.githubusercontent.com/nickspaargaren/no-google/master/google-domains
