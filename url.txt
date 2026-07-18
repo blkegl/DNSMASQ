@@ -65,7 +65,7 @@ https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews-s
 https://blocklistproject.github.io/Lists/dnsmasq-version/abuse-dnsmasq.txt
 
 # Blocklist Project Ads 
-https://blocklistproject.github.io/Lists/dnsmasq-version/ads-dnsmasq.txt
+# https://blocklistproject.github.io/Lists/dnsmasq-version/ads-dnsmasq.txt
 
 # Blocklist Project Crypto
 https://blocklistproject.github.io/Lists/dnsmasq-version/crypto-dnsmasq.txt
