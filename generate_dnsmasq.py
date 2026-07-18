@@ -198,7 +198,7 @@ def main():
 
 
 if __name__ == "__main__":
-    main()import os
+    main()
 import urllib.request
 import re
 
