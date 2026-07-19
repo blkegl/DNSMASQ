@@ -240,7 +240,7 @@ def filter_subdomains(domains):
 def write_dnsmasq(domains, filename):
     with open(filename, "w", encoding="utf-8") as f:
         f.writelines(
-            f"address=/{domain}/0.0.0.0\n"
+            f"address=/{domain}/\n"
             for domain in domains
         )
 
