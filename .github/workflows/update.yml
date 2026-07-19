@@ -33,12 +33,12 @@ jobs:
       run: |
         git config --global user.name "github-actions[bot]"
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
-        
-        # Check if dnsmasq.txt has changed
-        if git status --porcelain | grep -q "dnsmasq.txt"; then
-          git add dnsmasq.txt
-          git commit -m "chore: auto-update dnsmasq.txt [skip ci]"
-          git push
-        else
-          echo "No changes detected in dnsmasq.txt"
-        fi
+            
+        # Always stage all generated dnsmasq files
+        git add dnsmasq*.txt
+            
+        # Commit unconditionally (allows empty commits if files are identical)
+        git commit --allow-empty -m "chore: auto-update dnsmasq blocklists [skip ci]"
+            
+        # Push to the repository
+        git push
