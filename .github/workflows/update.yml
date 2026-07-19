@@ -2,8 +2,8 @@ name: Update DNSmasq List
 
 on:
   schedule:
-    # Runs at 22:00 UTC every day (which is 4:00 AM BST)
-    - cron: '0 22 * * *'
+    # Runs at 21:00 UTC every day (which is 3:00 AM BST)
+    - cron: '0 21 * * *'
   workflow_dispatch: # Allows manual triggering from the Actions tab
 
 jobs:
