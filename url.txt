@@ -35,7 +35,7 @@ https://raw.githubusercontent.com/AdguardTeam/cname-trackers/master/data/combine
 https://blocklistproject.github.io/Lists/dnsmasq-version/abuse-dnsmasq.txt
 
 # Blocklist Project Ads 
-https://blocklistproject.github.io/Lists/dnsmasq-version/ads-dnsmasq.txt
+# https://blocklistproject.github.io/Lists/dnsmasq-version/ads-dnsmasq.txt
 
 # Blocklist Project Crypto
 https://blocklistproject.github.io/Lists/dnsmasq-version/crypto-dnsmasq.txt
