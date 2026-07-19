@@ -33,17 +33,12 @@ jobs:
       run: |
         git config --global user.name "github-actions[bot]"
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
-        
-        # 1. Force stage all the newly generated dnsmasq files
-        git add -A dnsmasq*.txt
-        
-        # 2. Append a timestamp or specific run ID to the message 
-        #    so the commit metadata is unique every run
-        TIMESTAMP=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
-        
-        # 3. Unconditionally commit
-        git commit --allow-empty -m "chore: auto-update dnsmasq blocklists ($TIMESTAMP) [skip ci]"
-        
-        # 4. Pull any remote updates using rebase to prevent conflicts, then push
-        git pull --rebase origin main
-        git push origin HEAD
+            
+        # Always stage all generated dnsmasq files
+        git add dnsmasq*.txt
+            
+        # Commit unconditionally (allows empty commits if files are identical)
+        git commit --allow-empty -m "chore: auto-update dnsmasq blocklists [skip ci]"
+            
+        # Push to the repository
+        git push
