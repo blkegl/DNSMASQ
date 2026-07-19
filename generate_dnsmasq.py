@@ -7,7 +7,9 @@ import requests
 # ------------------------------------------------------------
 
 INPUT_FILE = "url.txt"
-OUTPUT_FILE = "dnsmasq.txt"
+# We will use this base name to generate dnsmasq1.txt, dnsmasq2.txt, etc.
+OUTPUT_FILE_BASE = "dnsmasq" 
+NUM_SPLIT_FILES = 10
 TIMEOUT = 30
 
 USER_AGENT = "Mozilla/5.0"
@@ -234,15 +236,34 @@ def filter_subdomains(domains):
 
 
 # ------------------------------------------------------------
-# Output
+# Output Splitting Logic
 # ------------------------------------------------------------
 
-def write_dnsmasq(domains, filename):
-    with open(filename, "w", encoding="utf-8") as f:
-        f.writelines(
-            f"address=/{domain}/\n"
-            for domain in domains
-        )
+def write_split_dnsmasq(domains, base_filename, num_splits=10):
+    """Splits domains uniformly across a specified number of files."""
+    total_domains = len(domains)
+    if total_domains == 0:
+        print("[WARNING] No domains to write.")
+        return
+
+    # Determine standard chunk sizing and handle mathematical remainders smoothly
+    avg_chunk = total_domains // num_splits
+    remainder = total_domains % num_splits
+
+    start_idx = 0
+    for i in range(1, num_splits + 1):
+        # Dynamically distribute the remainder across the first few chunks
+        chunk_size = avg_chunk + (1 if i <= remainder else 0)
+        end_idx = start_idx + chunk_size
+        
+        chunk_domains = domains[start_idx:end_idx]
+        filename = f"{base_filename}{i}.txt"
+        
+        with open(filename, "w", encoding="utf-8") as f:
+            f.writelines(f"address=/{domain}/\n" for domain in chunk_domains)
+            
+        print(f"    └─ Written {len(chunk_domains):,} domains to {filename}")
+        start_idx = end_idx
 
 
 # ------------------------------------------------------------
@@ -253,7 +274,11 @@ def main():
     raw_domains, source_metrics, global_raw_processed, total_sources = fetch_domains(INPUT_FILE)
     
     cleaned_domains = filter_subdomains(raw_domains)
-    write_dnsmasq(cleaned_domains, OUTPUT_FILE)
+    
+    print("\n" + "=" * 50)
+    print(f" WRITING SPLIT OUTPUTS ({NUM_SPLIT_FILES} Files)")
+    print("=" * 50)
+    write_split_dnsmasq(cleaned_domains, OUTPUT_FILE_BASE, NUM_SPLIT_FILES)
 
     print("\n" + "=" * 50)
     print(" INDIVIDUAL SOURCE METRICS REPORT")
