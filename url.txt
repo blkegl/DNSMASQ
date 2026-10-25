@@ -16,17 +16,26 @@ https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/dnsmasq/doh-vpn-proxy-b
 # Badware Hoster
 https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/dnsmasq/hoster.txt
 
-# Aduard Ads
-https://raw.githubusercontent.com/AdguardTeam/cname-trackers/master/data/combined_disguised_ads_justdomains.txt
+# Aduard Mobile Ads
+https://raw.githubusercontent.com/r-a-y/mobile-hosts/master/AdguardMobileAds.txt
 
-# Adguard Clickthroughs
-https://raw.githubusercontent.com/AdguardTeam/cname-trackers/master/data/combined_disguised_clickthroughs_justdomains.txt
+# AdGuard Mobile Tracking and Spyware
+https://raw.githubusercontent.com/r-a-y/mobile-hosts/master/AdguardMobileSpyware.txt
 
-# Adguard Microsites
-https://raw.githubusercontent.com/AdguardTeam/cname-trackers/master/data/combined_disguised_microsites_justdomains.txt
+# AdGuard CNAME-cloaked Ads
+https://raw.githubusercontent.com/r-a-y/mobile-hosts/master/AdguardCNAMEAds.txt
 
-# Adguard Trackers
-https://raw.githubusercontent.com/AdguardTeam/cname-trackers/master/data/combined_disguised_trackers_justdomains.txt
+# AdGuard CNAME-cloaked Clickthroughs
+https://raw.githubusercontent.com/r-a-y/mobile-hosts/master/AdguardCNAMEClickthroughs.txt
+
+# AdGuard CNAME-cloaked Microsites
+https://raw.githubusercontent.com/r-a-y/mobile-hosts/master/AdguardCNAMEMicrosites.txt
+
+# AdGuard CNAME-cloaked Trackers
+https://raw.githubusercontent.com/r-a-y/mobile-hosts/master/AdguardCNAME.txt
+
+# Adguard Tracking Protection
+https://raw.githubusercontent.com/r-a-y/mobile-hosts/master/AdguardTracking.txt
 
 # Adguard Mail Trackers
 https://raw.githubusercontent.com/AdguardTeam/cname-trackers/master/data/combined_disguised_mail_trackers_justdomains.txt
@@ -76,9 +85,6 @@ https://perflyst.github.io/PiHoleBlocklist/android-tracking.txt
 # Android Security Hosts
 https://raw.githubusercontent.com/furkun/AndroidSecurityHosts/main/hosts
 
-# NoCoin
-https://raw.githubusercontent.com/hoshsadiq/adblock-nocoin-list/master/hosts.txt
-
 # First-Party Trackers
 https://hostfiles.frogeye.fr/firstparty-trackers-hosts.txt
 
@@ -86,10 +92,9 @@ https://hostfiles.frogeye.fr/firstparty-trackers-hosts.txt
 https://raw.githubusercontent.com/kowith337/PersonalFilterListCollection/master/hosts/hosts_google_adservice_id.txt
 
 # Dandelion Sprout's Anti-Malware List
-https://raw.githubusercontent.com/DandelionSprout/adfilt/master/Alternate%20versions%20Anti-Malware%20List/AntiMalwareHosts.txt
+https://cdn.jsdelivr.net/gh/DandelionSprout/adfilt@master/Alternate%20versions%20Anti-Malware%20List/AntiMalwareDomains.txt
 
 # No Tracking
-https://raw.github.com/notracking/hosts-blocklists/master/hostnames.txt
 https://gitlab.com/quidsup/notrack-blocklists/raw/master/notrack-blocklist.txt
 
 # Windows Telemetry
