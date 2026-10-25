@@ -17,7 +17,7 @@ https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/dnsmasq/doh-vpn-proxy-b
 https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/dnsmasq/hoster.txt
 
 # Aduard Mobile Ads
-https://raw.githubusercontent.com/r-a-y/mobile-hosts/master/AdguardMobileAds.txt
+# https://raw.githubusercontent.com/r-a-y/mobile-hosts/master/AdguardMobileAds.txt
 
 # AdGuard Mobile Tracking and Spyware
 https://raw.githubusercontent.com/r-a-y/mobile-hosts/master/AdguardMobileSpyware.txt
@@ -40,20 +40,11 @@ https://raw.githubusercontent.com/r-a-y/mobile-hosts/master/AdguardTracking.txt
 # Adguard Mail Trackers
 https://raw.githubusercontent.com/AdguardTeam/cname-trackers/master/data/combined_disguised_mail_trackers_justdomains.txt
 
-# Blocklist Project Abuse
-# https://blocklistproject.github.io/Lists/dnsmasq-version/abuse-dnsmasq.txt
-
-# Blocklist Project Ads 
-# https://blocklistproject.github.io/Lists/dnsmasq-version/ads-dnsmasq.txt
-
 # Blocklist Project Crypto
 https://blocklistproject.github.io/Lists/dnsmasq-version/crypto-dnsmasq.txt
 
 # Blocklist Project Fraud
-https://blocklistproject.github.io/Lists/dnsmasq-version/fraud-dnsmasq.txt
-
-# Blocklist Project Malware (too big)
-# https://blocklistproject.github.io/Lists/dnsmasq-version/malware-dnsmasq.txt
+https://blocklistproject.github.io/Lists/dnsmasq-version/fraud-dnsmasq.tx
 
 # Blocklist Project Phishing
 https://blocklistproject.github.io/Lists/dnsmasq-version/phishing-dnsmasq.txt
