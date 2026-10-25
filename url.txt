@@ -47,7 +47,7 @@ https://blocklistproject.github.io/Lists/dnsmasq-version/crypto-dnsmasq.txt
 https://blocklistproject.github.io/Lists/dnsmasq-version/fraud-dnsmasq.tx
 
 # Blocklist Project Phishing
-https://blocklistproject.github.io/Lists/dnsmasq-version/phishing-dnsmasq.txt
+# https://blocklistproject.github.io/Lists/dnsmasq-version/phishing-dnsmasq.txt
 
 # Blocklist Project Ransomware
 https://blocklistproject.github.io/Lists/dnsmasq-version/ransomware-dnsmasq.txt
